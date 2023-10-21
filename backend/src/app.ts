@@ -1,9 +1,15 @@
 import express, { NextFunction, Request, Response } from "express";
+import cors from "cors";
 import { Error } from "mongoose";
 import notesRouter from "./routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
 
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 // middleware to set up express to accept json bodies in request
 app.use(express.json());
 
