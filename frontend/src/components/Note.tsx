@@ -4,11 +4,11 @@ import { Note as NoteModel } from "../models/note";
 import formatDate from "../util/formateDate";
 import { useMemo } from "react";
 
-interface NoteProps {
+interface Props {
   note: NoteModel;
 }
 
-const Note = ({ note }: NoteProps) => {
+const Note = ({ note }: Props) => {
   const footerText = useMemo(() => {
     if (note.updatedAt > note.createdAt)
       return `Updated: ${formatDate(note.updatedAt)}`;

@@ -12,6 +12,7 @@ const useNotes = () => {
     axios
       .get<NoteModel[]>("http://localhost:3000/api/notes")
       .then((res) => {
+        console.log(res);
         setNotes(res.data);
         setLoading(false);
       })
