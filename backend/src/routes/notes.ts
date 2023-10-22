@@ -38,9 +38,7 @@ router
         text,
       });
 
-      res
-        .status(201)
-        .json({ message: "Note created successfully", noteId: note._id });
+      res.status(201).json(note);
     } catch (error) {
       next(error);
     }

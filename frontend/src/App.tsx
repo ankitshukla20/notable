@@ -1,14 +1,38 @@
 import { Col, Container, Row } from "react-bootstrap";
 import Note from "./components/Note";
-import useNotes from "./hooks/useNotes";
 import AddNote from "./components/AddNote";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Note as NoteType } from "./models/note";
 
 function App() {
-  const { notes } = useNotes();
+  const [notes, setNotes] = useState<NoteType[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get<NoteType[]>("http://localhost:3000/api/notes")
+      .then((res) => {
+        console.log(res);
+        setNotes(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Container>
-      <AddNote />
+      <AddNote
+        onAdd={(newNote) => {
+          setNotes([...notes, newNote]);
+        }}
+      />
+
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {notes?.map((note) => (
           <Col key={note._id}>
