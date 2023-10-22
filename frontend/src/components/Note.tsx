@@ -3,6 +3,8 @@ import { Card } from "react-bootstrap";
 import { Note as NoteModel } from "../models/note";
 import formatDate from "../util/formateDate";
 import { useMemo } from "react";
+import { MdDelete } from "react-icons/md";
+import styleUtils from "../styles/utils.module.css";
 
 interface Props {
   note: NoteModel;
@@ -18,7 +20,10 @@ const Note = ({ note }: Props) => {
   return (
     <Card className={styles.noteCard}>
       <Card.Body className={styles.cardBody}>
-        <Card.Title>{note.title}</Card.Title>
+        <Card.Title className={styleUtils.flexCenter}>
+          {note.title}
+          <MdDelete className="text-muted ms-auto" />
+        </Card.Title>
         <Card.Text className={styles.cardText}>{note.text}</Card.Text>
       </Card.Body>
       <Card.Footer className="text-muted">{footerText}</Card.Footer>
