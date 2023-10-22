@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap";
 import AddNoteModal from "./AddNoteModal";
 import { useState } from "react";
 import { Note as NoteType } from "../models/note";
+import styles from "../styles/utils.module.css";
 
 interface Props {
   onAdd: (note: NoteType) => void;
@@ -15,7 +16,7 @@ const AddNote = ({ onAdd }: Props) => {
 
   return (
     <>
-      <Button className="mb-4" onClick={handleShow}>
+      <Button className={`mb-4 ${styles.blockCenter}`} onClick={handleShow}>
         Add Note
       </Button>
 

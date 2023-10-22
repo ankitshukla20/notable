@@ -7,7 +7,6 @@ import { Note as NoteType } from "./models/note";
 
 function App() {
   const [notes, setNotes] = useState<NoteType[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,6 +23,8 @@ function App() {
         setLoading(false);
       });
   }, []);
+
+  if (isLoading) return <>Loading</>;
 
   return (
     <Container>
