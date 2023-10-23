@@ -8,9 +8,10 @@ import styleUtils from "../styles/utils.module.css";
 
 interface Props {
   note: NoteModel;
+  onDelete: (noteId: string) => void;
 }
 
-const Note = ({ note }: Props) => {
+const Note = ({ note, onDelete }: Props) => {
   const footerText = useMemo(() => {
     if (note.updatedAt > note.createdAt)
       return `Updated: ${formatDate(note.updatedAt)}`;
@@ -22,7 +23,13 @@ const Note = ({ note }: Props) => {
       <Card.Body className={styles.cardBody}>
         <Card.Title className={styleUtils.flexCenter}>
           {note.title}
-          <MdDelete className="text-muted ms-auto" />
+          <MdDelete
+            className="text-muted ms-auto"
+            onClick={(e: React.MouseEvent) => {
+              onDelete(note._id);
+              e.stopPropagation();
+            }}
+          />
         </Card.Title>
         <Card.Text className={styles.cardText}>{note.text}</Card.Text>
       </Card.Body>

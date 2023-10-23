@@ -14,7 +14,6 @@ function App() {
     axios
       .get<NoteType[]>("http://localhost:3000/api/notes")
       .then((res) => {
-        console.log(res);
         setNotes(res.data);
         setLoading(false);
       })
@@ -23,6 +22,15 @@ function App() {
         setLoading(false);
       });
   }, []);
+
+  const deleteNote = (noteId: string) => {
+    axios
+      .delete("http://localhost:3000/api/notes/" + noteId)
+      .then(() => {
+        setNotes((prev) => prev.filter((note) => note._id !== noteId));
+      })
+      .catch((err) => console.log(err));
+  };
 
   if (isLoading) return <>Loading</>;
 
@@ -37,7 +45,7 @@ function App() {
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {notes?.map((note) => (
           <Col key={note._id}>
-            <Note note={note} />
+            <Note note={note} onDelete={deleteNote} />
           </Col>
         ))}
       </Row>
