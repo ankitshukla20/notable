@@ -1,8 +1,12 @@
 import { Button, Form, Modal } from "react-bootstrap";
 
-const EditNoteModal = () => {
+interface Props {
+  onDismiss: () => void;
+}
+
+const EditNoteModal = ({ onDismiss }: Props) => {
   return (
-    <Modal show>
+    <Modal show onHide={onDismiss}>
       <Modal.Header closeButton>
         <Modal.Title>Edit Note</Modal.Title>
       </Modal.Header>

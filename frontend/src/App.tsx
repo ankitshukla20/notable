@@ -10,6 +10,8 @@ function App() {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [isLoading, setLoading] = useState(false);
 
+  const [noteToEdit, setNoteToEdit] = useState<NoteType | null>(null);
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -33,6 +35,14 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  // To show and hide Edit Note Modal
+  const handleCardClick = (note: NoteType) => {
+    setNoteToEdit(note);
+  };
+
+  const dismissEditModal = () => setNoteToEdit(null);
+
+  // Return
   if (isLoading) return <>Loading</>;
 
   return (
@@ -46,12 +56,16 @@ function App() {
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
         {notes?.map((note) => (
           <Col key={note._id}>
-            <Note note={note} onDelete={deleteNote} />
+            <Note
+              note={note}
+              onDelete={deleteNote}
+              onCardClick={handleCardClick}
+            />
           </Col>
         ))}
       </Row>
 
-      <EditNoteModal />
+      {noteToEdit && <EditNoteModal onDismiss={dismissEditModal} />}
     </Container>
   );
 }
