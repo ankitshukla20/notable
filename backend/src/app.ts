@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { Error } from "mongoose";
 import notesRouter from "./routes/notes";
+import usersRouter from "./routes/users";
 import createHttpError, { isHttpError } from "http-errors";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // ----notes app routes' middleware----
 app.use("/api/notes", notesRouter);
+app.use("/api/users", usersRouter);
 
 // ----Error Handlers----
 app.use((req, res, next) => {
