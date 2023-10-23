@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Note as NoteType } from "./models/note";
 import EditNoteModal from "./components/EditNoteModal";
+import { NoteInput } from "./models/noteIntput";
 
 function App() {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -26,11 +27,25 @@ function App() {
       });
   }, []);
 
-  const deleteNote = (noteId: string) => {
+  const handleDeleteNote = (noteId: string) => {
     axios
       .delete("http://localhost:3000/api/notes/" + noteId)
       .then(() => {
-        setNotes((prev) => prev.filter((note) => note._id !== noteId));
+        setNotes((prevData) => prevData.filter((note) => note._id !== noteId));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleEditNote = (noteId: string, noteInput: NoteInput) => {
+    axios
+      .patch<NoteType>("http://localhost:3000/api/notes/" + noteId, noteInput)
+      .then((res) => {
+        const updatedNote = res.data;
+        setNotes((prevData) =>
+          prevData.map((note) =>
+            note._id !== updatedNote._id ? note : updatedNote
+          )
+        );
       })
       .catch((err) => console.log(err));
   };
@@ -58,14 +73,23 @@ function App() {
           <Col key={note._id}>
             <Note
               note={note}
-              onDelete={deleteNote}
+              onDelete={handleDeleteNote}
               onCardClick={handleCardClick}
             />
           </Col>
         ))}
       </Row>
 
-      {noteToEdit && <EditNoteModal onDismiss={dismissEditModal} />}
+      {noteToEdit && (
+        <EditNoteModal
+          note={noteToEdit}
+          onDismiss={dismissEditModal}
+          onSaveChanges={(noteId, noteInput) => {
+            handleEditNote(noteId, noteInput);
+            setNoteToEdit(null);
+          }}
+        />
+      )}
     </Container>
   );
 }

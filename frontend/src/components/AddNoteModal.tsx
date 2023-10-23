@@ -16,9 +16,9 @@ const AddNoteModal = ({ onDismiss, onSave }: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<NoteInput>();
 
-  const submit = (input: NoteInput) => {
+  const submit = (data: NoteInput) => {
     axios
-      .post("http://localhost:3000/api/notes", input)
+      .post("http://localhost:3000/api/notes", data)
       .then((res) => {
         onSave(res.data);
       })
@@ -34,7 +34,7 @@ const AddNoteModal = ({ onDismiss, onSave }: Props) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Form id="add-note" onSubmit={handleSubmit(submit)}>
+        <Form id="add-note-form" onSubmit={handleSubmit(submit)}>
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -61,7 +61,7 @@ const AddNoteModal = ({ onDismiss, onSave }: Props) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button form="add-note" type="submit" disabled={isSubmitting}>
+        <Button form="add-note-form" type="submit" disabled={isSubmitting}>
           Save
         </Button>
       </Modal.Footer>
