@@ -4,6 +4,7 @@ import AddNote from "./components/AddNote";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Note as NoteType } from "./models/note";
+import EditNoteModal from "./components/EditNoteModal";
 
 function App() {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -49,6 +50,8 @@ function App() {
           </Col>
         ))}
       </Row>
+
+      <EditNoteModal />
     </Container>
   );
 }

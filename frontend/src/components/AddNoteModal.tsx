@@ -30,7 +30,7 @@ const AddNoteModal = ({ onDismiss, onSave }: Props) => {
   return (
     <Modal show onHide={onDismiss}>
       <Modal.Header closeButton>
-        <Modal.Title>AddNote</Modal.Title>
+        <Modal.Title>Add Note</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
