@@ -10,7 +10,7 @@ interface NoteBody {
   text?: string;
 }
 
-interface PostNoteRequest {
+interface PostNoteRequest extends express.Request {
   body: NoteBody;
 }
 
@@ -44,7 +44,7 @@ router
     }
   });
 
-interface PatchNoteRequest {
+interface PatchNoteRequest extends express.Request {
   params: { noteId: string };
   body: NoteBody;
 }
