@@ -1,9 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import { Error } from "mongoose";
 import notesRouter from "./routes/notes";
 import usersRouter from "./routes/users";
 import createHttpError, { isHttpError } from "http-errors";
+import session from "express-session";
+import env from "./util/validateEnv";
+import MongoStore from "connect-mongo";
 
 const app = express();
 app.use(
@@ -13,6 +15,18 @@ app.use(
 );
 // middleware to set up express to accept json bodies in request
 app.use(express.json());
+
+// middleware for session management
+app.use(
+  session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 10000 },
+    rolling: true,
+    store: MongoStore.create({ mongoUrl: env.MONGO_CONNECTION_STRING }),
+  })
+);
 
 // ----notes app routes' middleware----
 app.use("/api/notes", notesRouter);
