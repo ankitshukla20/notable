@@ -61,31 +61,31 @@ function App() {
       />
       <Container>
         {loggedInUser ? <NotesGrid /> : <h1>Log in Please</h1>}
-
-        {showSignupModal && (
-          <SignupModal
-            onSignup={(signupCredentials) => {
-              handleSignup(signupCredentials);
-              setShowSignupModal(false);
-            }}
-            onDismiss={() => {
-              setShowSignupModal(false);
-            }}
-          />
-        )}
-
-        {showLoginModal && (
-          <LoginModal
-            onLogin={(loginCredentials) => {
-              handleLogin(loginCredentials);
-              setShowLoginModal(false);
-            }}
-            onDismiss={() => {
-              setShowLoginModal(false);
-            }}
-          />
-        )}
       </Container>
+
+      {showSignupModal && (
+        <SignupModal
+          onSignup={(signupCredentials) => {
+            handleSignup(signupCredentials);
+            setShowSignupModal(false);
+          }}
+          onDismiss={() => {
+            setShowSignupModal(false);
+          }}
+        />
+      )}
+
+      {showLoginModal && (
+        <LoginModal
+          onLogin={(loginCredentials) => {
+            handleLogin(loginCredentials);
+            setShowLoginModal(false);
+          }}
+          onDismiss={() => {
+            setShowLoginModal(false);
+          }}
+        />
+      )}
     </>
   );
 }
