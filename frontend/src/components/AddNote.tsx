@@ -1,13 +1,13 @@
 import { Button } from "react-bootstrap";
 import AddNoteModal from "./AddNoteModal";
 import { useState } from "react";
-import { Note as NoteType } from "../models/note";
+import { Note } from "../models/note";
 import styles from "../styles/utils.module.css";
-import { NoteInput } from "../models/noteIntput";
+import { NoteInput } from "../models/note";
 import apiClient from "../services/api-client";
 
 interface Props {
-  onAdd: (note: NoteType) => void;
+  onAdd: (note: Note) => void;
 }
 
 const AddNote = ({ onAdd }: Props) => {

@@ -1,22 +1,22 @@
 import { Col, Container, Row } from "react-bootstrap";
-import Note from "./components/Note";
+import NoteCard from "./components/NoteCard";
 import AddNote from "./components/AddNote";
 import { useEffect, useState } from "react";
-import { Note as NoteType } from "./models/note";
+import { Note } from "./models/note";
 import EditNoteModal from "./components/EditNoteModal";
-import { NoteInput } from "./models/noteIntput";
+import { NoteInput } from "./models/note";
 import apiClient from "./services/api-client";
 
 function App() {
-  const [notes, setNotes] = useState<NoteType[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [isLoading, setLoading] = useState(false);
 
-  const [noteToEdit, setNoteToEdit] = useState<NoteType | null>(null);
+  const [noteToEdit, setNoteToEdit] = useState<Note | null>(null);
 
   useEffect(() => {
     setLoading(true);
     apiClient
-      .get<NoteType[]>("/notes")
+      .get<Note[]>("/notes")
       .then((res) => {
         setNotes(res.data);
         setLoading(false);
@@ -38,7 +38,7 @@ function App() {
 
   const handleEditNote = (noteId: string, noteInput: NoteInput) => {
     apiClient
-      .patch<NoteType>("/notes/" + noteId, noteInput)
+      .patch<Note>("/notes/" + noteId, noteInput)
       .then((res) => {
         const updatedNote = res.data;
         setNotes((prevData) =>
@@ -51,7 +51,7 @@ function App() {
   };
 
   // To show and hide Edit Note Modal
-  const handleCardClick = (note: NoteType) => {
+  const handleCardClick = (note: Note) => {
     setNoteToEdit(note);
   };
 
@@ -71,7 +71,7 @@ function App() {
       <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
         {notes?.map((note) => (
           <Col key={note._id}>
-            <Note
+            <NoteCard
               note={note}
               onDelete={handleDeleteNote}
               onCardClick={handleCardClick}

@@ -1,6 +1,6 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { NoteInput } from "../models/noteIntput";
+import { NoteInput } from "../models/note";
 
 interface Props {
   onDismiss: () => void;

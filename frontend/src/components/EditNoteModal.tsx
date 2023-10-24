@@ -1,10 +1,10 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { Note as NoteType } from "../models/note";
+import { Note } from "../models/note";
 import { useForm } from "react-hook-form";
-import { NoteInput } from "../models/noteIntput";
+import { NoteInput } from "../models/note";
 
 interface Props {
-  note: NoteType;
+  note: Note;
   onDismiss: () => void;
   onSaveChanges: (noteId: string, note: NoteInput) => void;
 }
@@ -14,7 +14,7 @@ const EditNoteModal = ({ note, onDismiss, onSaveChanges }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<NoteType>({
+  } = useForm<Note>({
     defaultValues: { title: note.title, text: note.text },
   });
 

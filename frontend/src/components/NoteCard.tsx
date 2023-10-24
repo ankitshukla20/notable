@@ -1,18 +1,18 @@
 import styles from "../styles/Note.module.css";
 import { Card } from "react-bootstrap";
-import { Note as NoteType } from "../models/note";
+import { Note } from "../models/note";
 import formatDate from "../util/formateDate";
 import { useMemo } from "react";
 import { MdDelete } from "react-icons/md";
 import styleUtils from "../styles/utils.module.css";
 
 interface Props {
-  note: NoteType;
+  note: Note;
   onDelete: (noteId: string) => void;
-  onCardClick: (note: NoteType) => void;
+  onCardClick: (note: Note) => void;
 }
 
-const Note = ({ note, onDelete, onCardClick }: Props) => {
+const NoteCard = ({ note, onDelete, onCardClick }: Props) => {
   const footerText = useMemo(() => {
     if (note.updatedAt > note.createdAt)
       return `Updated: ${formatDate(note.updatedAt)}`;
@@ -44,4 +44,4 @@ const Note = ({ note, onDelete, onCardClick }: Props) => {
   );
 };
 
-export default Note;
+export default NoteCard;
