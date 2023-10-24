@@ -22,7 +22,7 @@ router.route("/me").get(authenticateUser, async (req, res, next) => {
   const userId = req.session.userId;
   try {
     const user = await UserModel.findById(userId).select("+email").exec();
-    res.json(user);
+    res.json({ username: user?.username, email: user?.email });
   } catch (error) {
     next(error);
   }
@@ -74,7 +74,7 @@ router.route("/signup").post(async (req: PostSignupRequest, res, next) => {
 
     req.session.userId = newUser._id;
 
-    res.status(201).json(newUser);
+    res.status(201).json({ username: newUser.username, email: newUser.email });
   } catch (error) {
     next(error);
   }
@@ -111,7 +111,7 @@ router.route("/login").post(async (req: PostLoginRequest, res, next) => {
 
     req.session.userId = user._id;
 
-    res.status(201).json(user);
+    res.status(201).json({ username: user.username, email: user.email });
   } catch (error) {
     next(error);
   }

@@ -1,14 +1,14 @@
+import { Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { LoginCredentials } from "../models/user";
-import { Button, Form, Modal } from "react-bootstrap";
 import styles from "../styles/utils.module.css";
-import apiClient from "../services/api-client";
 
 interface Props {
   onDismiss: () => void;
+  onLogin: (loginCredentials: LoginCredentials) => void;
 }
 
-const LoginModal = ({ onDismiss }: Props) => {
+const LoginModal = ({ onDismiss, onLogin }: Props) => {
   const {
     register,
     handleSubmit,
@@ -16,16 +16,12 @@ const LoginModal = ({ onDismiss }: Props) => {
   } = useForm<LoginCredentials>();
 
   const submit = (data: LoginCredentials) => {
-    console.log(data);
-    apiClient
-      .post("/users/login", data)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+    onLogin(data);
   };
 
   return (
     <Modal show onHide={onDismiss}>
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title>Welcome to Notes-App</Modal.Title>
       </Modal.Header>
 
