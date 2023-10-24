@@ -18,8 +18,14 @@ const authenticateUser: RequestHandler = async (req, res, next) => {
 
 // ----Protected Routes----
 
-router.route("/").get(authenticateUser, (req, res) => {
-  res.json({ message: "This is a protected route" });
+router.route("/me").get(authenticateUser, async (req, res, next) => {
+  const userId = req.session.userId;
+  try {
+    const user = await UserModel.findById(userId).select("+email").exec();
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // ----Login, Logout and Register routes----
