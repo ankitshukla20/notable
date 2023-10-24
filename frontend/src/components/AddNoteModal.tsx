@@ -1,12 +1,10 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { Note } from "../models/note";
 import { useForm } from "react-hook-form";
 import { NoteInput } from "../models/noteIntput";
-import axios from "axios";
 
 interface Props {
   onDismiss: () => void;
-  onSave: (note: Note) => void;
+  onSave: (note: NoteInput) => void;
 }
 
 const AddNoteModal = ({ onDismiss, onSave }: Props) => {
@@ -17,14 +15,7 @@ const AddNoteModal = ({ onDismiss, onSave }: Props) => {
   } = useForm<NoteInput>();
 
   const submit = (data: NoteInput) => {
-    axios
-      .post("http://localhost:3000/api/notes", data)
-      .then((res) => {
-        onSave(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    onSave(data);
   };
 
   return (

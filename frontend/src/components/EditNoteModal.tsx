@@ -30,7 +30,7 @@ const EditNoteModal = ({ note, onDismiss, onSaveChanges }: Props) => {
 
       <Modal.Body>
         <Form id="edit-note-form" onSubmit={handleSubmit(submit)}>
-          <Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
@@ -43,12 +43,12 @@ const EditNoteModal = ({ note, onDismiss, onSaveChanges }: Props) => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Text</Form.Label>
             <Form.Control
               as="textarea"
               placeholder="Text"
-              rows={5}
+              rows={7}
               {...register("text")}
             />
           </Form.Group>

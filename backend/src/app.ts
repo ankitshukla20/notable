@@ -11,6 +11,7 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 // middleware to set up express to accept json bodies in request

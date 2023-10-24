@@ -2,10 +2,10 @@ import { Col, Container, Row } from "react-bootstrap";
 import Note from "./components/Note";
 import AddNote from "./components/AddNote";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Note as NoteType } from "./models/note";
 import EditNoteModal from "./components/EditNoteModal";
 import { NoteInput } from "./models/noteIntput";
+import apiClient from "./services/api-client";
 
 function App() {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -15,8 +15,8 @@ function App() {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get<NoteType[]>("http://localhost:3000/api/notes")
+    apiClient
+      .get<NoteType[]>("/notes")
       .then((res) => {
         setNotes(res.data);
         setLoading(false);
@@ -28,8 +28,8 @@ function App() {
   }, []);
 
   const handleDeleteNote = (noteId: string) => {
-    axios
-      .delete("http://localhost:3000/api/notes/" + noteId)
+    apiClient
+      .delete("/notes/" + noteId)
       .then(() => {
         setNotes((prevData) => prevData.filter((note) => note._id !== noteId));
       })
@@ -37,8 +37,8 @@ function App() {
   };
 
   const handleEditNote = (noteId: string, noteInput: NoteInput) => {
-    axios
-      .patch<NoteType>("http://localhost:3000/api/notes/" + noteId, noteInput)
+    apiClient
+      .patch<NoteType>("/notes/" + noteId, noteInput)
       .then((res) => {
         const updatedNote = res.data;
         setNotes((prevData) =>
@@ -68,7 +68,7 @@ function App() {
         }}
       />
 
-      <Row xs={1} md={2} lg={3} xl={4} className="g-4">
+      <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
         {notes?.map((note) => (
           <Col key={note._id}>
             <Note
@@ -85,8 +85,8 @@ function App() {
           note={noteToEdit}
           onDismiss={dismissEditModal}
           onSaveChanges={(noteId, noteInput) => {
-            handleEditNote(noteId, noteInput);
             setNoteToEdit(null);
+            handleEditNote(noteId, noteInput);
           }}
         />
       )}
