@@ -3,6 +3,7 @@ import express from "express";
 import createHttpError from "http-errors";
 import authenticateUser from "../middleware/auth";
 import UserModel from "../models/user.model";
+import { assertIsDefined } from "../util/assertIsDefined";
 
 const router = express.Router();
 
@@ -11,6 +12,8 @@ const router = express.Router();
 router.route("/me").get(authenticateUser, async (req, res, next) => {
   const userId = req.session.userId;
   try {
+    assertIsDefined(userId);
+
     const user = await UserModel.findById(userId).select("+email").exec();
     res.json({ username: user?.username, email: user?.email });
   } catch (error) {
