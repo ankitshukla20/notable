@@ -1,22 +1,12 @@
-import express, { RequestHandler } from "express";
-import createHttpError from "http-errors";
-import UserModel from "../models/user.model";
 import bcrypt from "bcrypt";
+import express from "express";
+import createHttpError from "http-errors";
+import authenticateUser from "../middleware/auth";
+import UserModel from "../models/user.model";
 
 const router = express.Router();
 
-// ----User authentication Middleware----
-
-const authenticateUser: RequestHandler = async (req, res, next) => {
-  // console.log(req.session);
-  if (req.session.userId) {
-    next();
-  } else {
-    next(createHttpError(401, "User not aunthenticated"));
-  }
-};
-
-// ----Protected Routes----
+// ----Protected Me Route----
 
 router.route("/me").get(authenticateUser, async (req, res, next) => {
   const userId = req.session.userId;

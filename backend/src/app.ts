@@ -1,11 +1,12 @@
-import express, { NextFunction, Request, Response } from "express";
+import MongoStore from "connect-mongo";
 import cors from "cors";
+import express, { NextFunction, Request, Response } from "express";
+import session from "express-session";
+import createHttpError, { isHttpError } from "http-errors";
+import authenticateUser from "./middleware/auth";
 import notesRouter from "./routes/notes";
 import usersRouter from "./routes/users";
-import createHttpError, { isHttpError } from "http-errors";
-import session from "express-session";
 import env from "./util/validateEnv";
-import MongoStore from "connect-mongo";
 
 const app = express();
 app.use(
@@ -30,7 +31,7 @@ app.use(
 );
 
 // ----notes app routes' middleware----
-app.use("/api/notes", notesRouter);
+app.use("/api/notes", authenticateUser, notesRouter);
 app.use("/api/users", usersRouter);
 
 // ----Error Handlers----
