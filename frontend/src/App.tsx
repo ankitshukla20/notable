@@ -6,6 +6,7 @@ import NotesGrid from "./components/NotesGrid";
 import SignupModal from "./components/SignupModal";
 import { LoginCredentials, SignupCredentials, User } from "./models/user";
 import apiClient from "./services/api-client";
+import styles from "./styles/App.module.css";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -59,7 +60,7 @@ function App() {
         }}
         onLoginClick={() => setShowLoginModal(true)}
       />
-      <Container>
+      <Container className={styles.pageContainer}>
         {loggedInUser ? <NotesGrid /> : <h1>Log in Please</h1>}
       </Container>
 
