@@ -1,10 +1,10 @@
-import { Button } from "react-bootstrap";
-import AddNoteModal from "./AddNoteModal";
 import { useState } from "react";
-import { Note } from "../models/note";
-import styles from "../styles/utils.module.css";
-import { NoteInput } from "../models/note";
+import { Button } from "react-bootstrap";
+import { FaPlus } from "react-icons/fa";
+import { Note, NoteInput } from "../models/note";
 import apiClient from "../services/api-client";
+import styles from "../styles/utils.module.css";
+import AddNoteModal from "./AddNoteModal";
 
 interface Props {
   onAdd: (note: Note) => void;
@@ -27,15 +27,19 @@ const AddNote = ({ onAdd }: Props) => {
 
   return (
     <>
-      <Button className={`mb-4 ${styles.blockCenter}`} onClick={handleShow}>
+      <Button
+        className={`mb-4 ${styles.blockCenter} ${styles.flexCenter}`}
+        onClick={handleShow}
+      >
+        <FaPlus />
         Add Note
       </Button>
 
       {show && (
         <AddNoteModal
           onSave={(note) => {
-            setShow(false);
             handleAddNote(note);
+            setShow(false);
           }}
           onDismiss={handleClose}
         />

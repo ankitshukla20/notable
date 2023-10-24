@@ -1,3 +1,8 @@
+export interface User {
+  username: string;
+  email: string;
+}
+
 export interface SignupCredentials {
   username: string;
   email: string;
