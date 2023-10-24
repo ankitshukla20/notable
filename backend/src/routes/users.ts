@@ -1,9 +1,28 @@
-import express from "express";
+import express, { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import UserModel from "../models/user.model";
 import bcrypt from "bcrypt";
 
 const router = express.Router();
+
+// ----User authentication Middleware----
+
+const authenticateUser: RequestHandler = async (req, res, next) => {
+  // console.log(req.session);
+  if (req.session.userId) {
+    next();
+  } else {
+    next(createHttpError(401, "User not aunthenticated"));
+  }
+};
+
+// ----Protected Routes----
+
+router.route("/").get(authenticateUser, (req, res) => {
+  res.json({ message: "This is a protected route" });
+});
+
+// ----Login, Logout and Register routes----
 
 interface SignupBody {
   username?: string;
@@ -90,6 +109,16 @@ router.route("/login").post(async (req: PostLoginRequest, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.route("/logout").post((req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      next(createHttpError(500, "An error occurred while logging out"));
+    } else {
+      res.sendStatus(200);
+    }
+  });
 });
 
 export default router;
