@@ -1,4 +1,4 @@
-import { Button, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { SignupCredentials } from "../models/user";
 import styles from "../styles/utils.module.css";
@@ -6,9 +6,10 @@ import styles from "../styles/utils.module.css";
 interface Props {
   onDismiss: () => void;
   onSignup: (signupCredentials: SignupCredentials) => void;
+  errorText: string | null;
 }
 
-const SignupModal = ({ onDismiss, onSignup }: Props) => {
+const SignupModal = ({ onDismiss, onSignup, errorText }: Props) => {
   const {
     register,
     handleSubmit,
@@ -26,6 +27,8 @@ const SignupModal = ({ onDismiss, onSignup }: Props) => {
       </Modal.Header>
 
       <Modal.Body>
+        {errorText && <Alert variant="danger">{errorText}</Alert>}
+
         <Form onSubmit={handleSubmit(submit)}>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>

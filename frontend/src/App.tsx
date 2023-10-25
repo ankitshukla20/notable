@@ -16,6 +16,9 @@ function App() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
+  const [signupError, setSignupError] = useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
+
   useEffect(() => {
     apiClient
       .get("/users/me")
@@ -28,8 +31,12 @@ function App() {
   const handleLogout = () => {
     apiClient
       .post("/users/logout")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     setLoggedInUser(null);
   };
@@ -39,8 +46,13 @@ function App() {
       .post("/users/signup", userCredentials)
       .then((res) => {
         setLoggedInUser(res.data);
+        setSignupError(null);
+        setShowSignupModal(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSignupError(err.response.data.error);
+        console.log(err.response.data.error);
+      });
   };
 
   const handleLogin = (userCredentials: LoginCredentials) => {
@@ -48,8 +60,13 @@ function App() {
       .post("/users/login", userCredentials)
       .then((res) => {
         setLoggedInUser(res.data);
+        setLoginError(null);
+        setShowLoginModal(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoginError(err.response.data.error);
+        console.log(err.response.data.error);
+      });
   };
 
   return (
@@ -74,10 +91,8 @@ function App() {
 
       {showSignupModal && (
         <SignupModal
-          onSignup={(signupCredentials) => {
-            handleSignup(signupCredentials);
-            setShowSignupModal(false);
-          }}
+          onSignup={handleSignup}
+          errorText={signupError}
           onDismiss={() => {
             setShowSignupModal(false);
           }}
@@ -86,10 +101,8 @@ function App() {
 
       {showLoginModal && (
         <LoginModal
-          onLogin={(loginCredentials) => {
-            handleLogin(loginCredentials);
-            setShowLoginModal(false);
-          }}
+          onLogin={handleLogin}
+          errorText={loginError}
           onDismiss={() => {
             setShowLoginModal(false);
           }}

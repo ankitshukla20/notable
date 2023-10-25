@@ -1,4 +1,4 @@
-import { Button, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { LoginCredentials } from "../models/user";
 import styles from "../styles/utils.module.css";
@@ -6,9 +6,10 @@ import styles from "../styles/utils.module.css";
 interface Props {
   onDismiss: () => void;
   onLogin: (loginCredentials: LoginCredentials) => void;
+  errorText: string | null;
 }
 
-const LoginModal = ({ onDismiss, onLogin }: Props) => {
+const LoginModal = ({ onDismiss, onLogin, errorText }: Props) => {
   const {
     register,
     handleSubmit,
@@ -26,6 +27,8 @@ const LoginModal = ({ onDismiss, onLogin }: Props) => {
       </Modal.Header>
 
       <Modal.Body>
+        {errorText && <Alert variant="danger">{errorText}</Alert>}
+
         <Form onSubmit={handleSubmit(submit)}>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>
