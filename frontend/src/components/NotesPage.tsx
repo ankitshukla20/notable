@@ -13,7 +13,9 @@ const NotesPage = ({ user }: Props) => {
         <NotesGrid />
       ) : (
         <div className={`${utilsStyles.flexCenter} mt-5`}>
-          <h4>Please Log-in to see your notes.</h4>
+          <h4 className={utilsStyles.textCenter}>
+            Please Log-in to see your notes.
+          </h4>
         </div>
       )}
     </>

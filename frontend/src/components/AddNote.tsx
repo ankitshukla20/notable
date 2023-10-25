@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
-import { Note, NoteInput } from "../models/note";
-import apiClient from "../services/api-client";
+import { NoteInput } from "../models/note";
 import styles from "../styles/utils.module.css";
 import AddNoteModal from "./AddNoteModal";
 
 interface Props {
-  onAdd: (note: Note) => void;
+  onAdd: (note: NoteInput) => void;
 }
 
 const AddNote = ({ onAdd }: Props) => {
@@ -15,15 +14,6 @@ const AddNote = ({ onAdd }: Props) => {
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-
-  const handleAddNote = (noteInput: NoteInput) => {
-    apiClient
-      .post("/notes", noteInput)
-      .then((res) => {
-        onAdd(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
 
   return (
     <>
@@ -38,7 +28,7 @@ const AddNote = ({ onAdd }: Props) => {
       {show && (
         <AddNoteModal
           onSave={(note) => {
-            handleAddNote(note);
+            onAdd(note);
             setShow(false);
           }}
           onDismiss={handleClose}

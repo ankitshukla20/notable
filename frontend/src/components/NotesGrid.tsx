@@ -40,7 +40,18 @@ const NotesGrid = () => {
       .catch((err) => console.log(err));
   };
 
-  // Make a delete request and change notes state
+  // Make an add request and change notes state
+  const handleAddNote = (newNote: NoteInput) => {
+    apiClient
+      .post("/notes", newNote)
+      .then((res) => {
+        const newNote = res.data;
+        setNotes([...notes, newNote]);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // Make an edit request and change notes state
   const handleEditNote = (noteId: string, noteInput: NoteInput) => {
     apiClient
       .patch<Note>("/notes/" + noteId, noteInput)
@@ -67,11 +78,7 @@ const NotesGrid = () => {
 
   return (
     <>
-      <AddNote
-        onAdd={(newNote) => {
-          setNotes([...notes, newNote]);
-        }}
-      />
+      <AddNote onAdd={handleAddNote} />
 
       {notes.length > 0 ? (
         <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
@@ -87,7 +94,7 @@ const NotesGrid = () => {
         </Row>
       ) : (
         <div className={`${styles.flexCenter} mt-5`}>
-          <h5>You don't have notes yet.</h5>
+          <h5 className={styles.textCenter}>You don't have notes yet.</h5>
         </div>
       )}
 
