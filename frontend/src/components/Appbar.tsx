@@ -1,5 +1,6 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { User } from "../models/user";
+import { Link } from "react-router-dom";
 
 interface Props {
   user: User | null;
@@ -18,10 +19,17 @@ const Appbar = ({
     <>
       <Navbar bg="primary" variant="dark" expand="sm" sticky="top">
         <Container>
-          <Navbar.Brand>Notable</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            Notable
+          </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar">
+            <Nav>
+              <Nav.Link as={Link} to="/privacy">
+                privacy
+              </Nav.Link>
+            </Nav>
             <Nav className="ms-auto">
               {user ? (
                 <>

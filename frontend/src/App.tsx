@@ -8,6 +8,8 @@ import { LoginCredentials, SignupCredentials, User } from "./models/user";
 import apiClient from "./services/api-client";
 import styles from "./styles/App.module.css";
 import utilsStyles from "./styles/utils.module.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PrivacyPage from "./components/PrivacyPage";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -53,14 +55,20 @@ function App() {
 
   return (
     <>
-      <Appbar
-        user={loggedInUser}
-        onLogoutClick={handleLogout}
-        onSignupClick={() => {
-          setShowSignupModal(true);
-        }}
-        onLoginClick={() => setShowLoginModal(true)}
-      />
+      <Router>
+        <Appbar
+          user={loggedInUser}
+          onLogoutClick={handleLogout}
+          onSignupClick={() => {
+            setShowSignupModal(true);
+          }}
+          onLoginClick={() => setShowLoginModal(true)}
+        />
+
+        <Routes>
+          <Route path="/privacy" element={<PrivacyPage />} />
+        </Routes>
+      </Router>
 
       <Container className={styles.pageContainer}>
         {loggedInUser ? (
