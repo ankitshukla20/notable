@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Appbar from "./components/Appbar";
 import LoginModal from "./components/LoginModal";
-import NotesGrid from "./components/NotesGrid";
+import PrivacyPage from "./components/PrivacyPage";
 import SignupModal from "./components/SignupModal";
 import { LoginCredentials, SignupCredentials, User } from "./models/user";
 import apiClient from "./services/api-client";
 import styles from "./styles/App.module.css";
-import utilsStyles from "./styles/utils.module.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import PrivacyPage from "./components/PrivacyPage";
+import NotesPage from "./components/NotesPage";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -65,20 +64,13 @@ function App() {
           onLoginClick={() => setShowLoginModal(true)}
         />
 
-        <Routes>
-          <Route path="/privacy" element={<PrivacyPage />} />
-        </Routes>
+        <Container className={styles.pageContainer}>
+          <Routes>
+            <Route path="/" element={<NotesPage user={loggedInUser} />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+          </Routes>
+        </Container>
       </Router>
-
-      <Container className={styles.pageContainer}>
-        {loggedInUser ? (
-          <NotesGrid />
-        ) : (
-          <div className={`${utilsStyles.flexCenter} mt-5`}>
-            <h4>Please Log-in to see your notes.</h4>
-          </div>
-        )}
-      </Container>
 
       {showSignupModal && (
         <SignupModal
