@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Note, NoteInput } from "../models/note";
 import apiClient from "../services/api-client";
+import styles from "../styles/utils.module.css";
 import AddNote from "./AddNote";
 import EditNoteModal from "./EditNoteModal";
 import NoteCard from "./NoteCard";
@@ -72,28 +73,34 @@ const NotesGrid = () => {
         }}
       />
 
-      <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
-        {notes?.map((note) => (
-          <Col key={note._id}>
-            <NoteCard
-              note={note}
-              onDelete={handleDeleteNote}
-              onCardClick={handleCardClick}
-            />
-          </Col>
-        ))}
+      {notes.length > 0 ? (
+        <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
+          {notes?.map((note) => (
+            <Col key={note._id}>
+              <NoteCard
+                note={note}
+                onDelete={handleDeleteNote}
+                onCardClick={handleCardClick}
+              />
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <div className={`${styles.flexCenter} mt-5`}>
+          <h5>You don't have notes yet.</h5>
+        </div>
+      )}
 
-        {noteToEdit && (
-          <EditNoteModal
-            note={noteToEdit}
-            onDismiss={dismissEditModal}
-            onSaveChanges={(noteId, noteInput) => {
-              handleEditNote(noteId, noteInput);
-              setNoteToEdit(null);
-            }}
-          />
-        )}
-      </Row>
+      {noteToEdit && (
+        <EditNoteModal
+          note={noteToEdit}
+          onDismiss={dismissEditModal}
+          onSaveChanges={(noteId, noteInput) => {
+            handleEditNote(noteId, noteInput);
+            setNoteToEdit(null);
+          }}
+        />
+      )}
     </>
   );
 };

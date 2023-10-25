@@ -22,7 +22,7 @@ const LoginModal = ({ onDismiss, onLogin }: Props) => {
   return (
     <Modal show onHide={onDismiss}>
       <Modal.Header closeButton>
-        <Modal.Title>Welcome to Notes-App</Modal.Title>
+        <Modal.Title>Welcome back to Notable</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

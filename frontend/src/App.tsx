@@ -7,6 +7,7 @@ import SignupModal from "./components/SignupModal";
 import { LoginCredentials, SignupCredentials, User } from "./models/user";
 import apiClient from "./services/api-client";
 import styles from "./styles/App.module.css";
+import utilsStyles from "./styles/utils.module.css";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -60,8 +61,15 @@ function App() {
         }}
         onLoginClick={() => setShowLoginModal(true)}
       />
+
       <Container className={styles.pageContainer}>
-        {loggedInUser ? <NotesGrid /> : <h1>Log in Please</h1>}
+        {loggedInUser ? (
+          <NotesGrid />
+        ) : (
+          <div className={`${utilsStyles.flexCenter} mt-5`}>
+            <h4>Please Log-in to see your notes.</h4>
+          </div>
+        )}
       </Container>
 
       {showSignupModal && (

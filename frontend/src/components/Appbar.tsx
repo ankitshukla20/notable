@@ -18,7 +18,7 @@ const Appbar = ({
     <>
       <Navbar bg="primary" variant="dark" expand="sm" sticky="top">
         <Container>
-          <Navbar.Brand>Notes App</Navbar.Brand>
+          <Navbar.Brand>Notable</Navbar.Brand>
 
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar">
@@ -32,8 +32,10 @@ const Appbar = ({
                 </>
               ) : (
                 <>
-                  <Button onClick={onSignupClick}>Sign up</Button>
-                  <Button onClick={onLoginClick}>Log in</Button>
+                  <Button className="me-2" onClick={onSignupClick}>
+                    Signup
+                  </Button>
+                  <Button onClick={onLoginClick}>Login</Button>
                 </>
               )}
             </Nav>
