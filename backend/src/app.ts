@@ -11,8 +11,13 @@ import morgan from "morgan";
 
 const app = express();
 
+// Enable trust in proxy servers
+app.set("trust proxy", 1);
+
+// middleware for req logs
 app.use(morgan("dev"));
 
+// middleware for cors error handling
 const allowedOrigins = [
   "http://localhost:5173",
   "https://notable-m312.onrender.com",
