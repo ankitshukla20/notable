@@ -38,7 +38,7 @@ app.use(
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60 * 60 * 10000 },
+    cookie: { maxAge: 60 * 60 * 10000, domain: ".onrender.com" },
     rolling: true,
     store: MongoStore.create({ mongoUrl: env.MONGO_CONNECTION_STRING }),
   })
