@@ -7,8 +7,12 @@ import authenticateUser from "./middleware/auth";
 import notesRouter from "./routes/notes";
 import usersRouter from "./routes/users";
 import env from "./util/validateEnv";
+import morgan from "morgan";
 
 const app = express();
+
+app.use(morgan("dev"));
+
 app.use(
   cors({
     origin: "http://localhost:5173",
