@@ -34,6 +34,11 @@ app.use(
   })
 );
 
+//
+app.get("/", (req, res) => {
+  res.json("Hello from notable server");
+});
+
 // ----notes app routes' middleware----
 app.use("/api/notes", authenticateUser, notesRouter);
 app.use("/api/users", usersRouter);
