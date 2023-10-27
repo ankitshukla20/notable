@@ -21,7 +21,7 @@ app.use(morgan("dev"));
 const allowedOrigins = [
   "http://localhost:5173",
   "https://notable-m312.onrender.com",
-  "https://notable-indol.vercel.app/",
+  "https://notable-indol.vercel.app",
 ];
 
 app.use(
